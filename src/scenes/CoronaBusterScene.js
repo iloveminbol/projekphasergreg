@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 
-import FallingObject from "../ui/Fallingobejct.js";
+import FallingObject from "../ui/FallingObject.js";
 
 import Laser from "../ui/Laser.js";
 import ScoreLabel from "../ui/ScoreLabel.js";
@@ -11,7 +11,7 @@ export default class CoronaBusterScene extends Phaser.Scene {
   }
 
   init() {
-    this.planet = undefined;
+    this.cloud = undefined;
     this.nav_left = false;
     this.nav_right = false;
     this.shoot = false;
@@ -24,12 +24,12 @@ export default class CoronaBusterScene extends Phaser.Scene {
     this.lastFired = 0;
     this.scoreLabel = undefined;
     this.lifeLabel = undefined;
-    this.penyembuh = undefined;
+    this.handsanitizers = undefined;
     this.backsound = undefined;
   }
 
   preload() {
-    this.load.image("background", "images/bg-1.jpg");
+    this.load.image("background", "images/bg-1.png");
     this.load.image("cloud", "images/saturn.png");
     this.load.image("left-btn", "images/left-btn.png");
     this.load.image("right-btn", "images/right-btn.png");
@@ -61,7 +61,7 @@ export default class CoronaBusterScene extends Phaser.Scene {
     this.clouds = this.physics.add.group({
       key: "cloud",
       //ulangi tampilkan awan
-      repeat: 30,
+      repeat: 10,
     });
 
     Phaser.Actions.RandomRectangle(
@@ -115,7 +115,7 @@ export default class CoronaBusterScene extends Phaser.Scene {
       this
     );
 
-    this.penyembuh = this.physics.add.group({
+    this.handsanitizers = this.physics.add.group({
       classType: FallingObject,
       runChildUpdate: true,
     });
@@ -129,7 +129,7 @@ export default class CoronaBusterScene extends Phaser.Scene {
 
     this.physics.add.overlap(
       this.player,
-      this.penyembuh,
+      this.handsanitizers,
       this.increaseLife,
       null,
       this
@@ -307,14 +307,14 @@ export default class CoronaBusterScene extends Phaser.Scene {
   }
 
   createScoreLabel(x, y, score) {
-    const style = { fontSize: "32px", fill: "#000" };
+    const style = { fontSize: "32px", fill: "#E0FFFF" };
     const label = new ScoreLabel(this, x, y, score, style).setDepth(1);
     this.add.existing(label);
     return label;
   }
 
   createLifeLabel(x, y, life) {
-    const style = { fontSize: "32px", fill: "#000" };
+    const style = { fontSize: "32px", fill: "#ADFF2F" };
     const label = new LifeLabel(this, x, y, life, style).setDepth(1);
     this.add.existing(label);
     return label;
@@ -358,14 +358,14 @@ export default class CoronaBusterScene extends Phaser.Scene {
     }
   }
 
-  increaseLife(player, penyembuh) {
-    penyembuh.die();
+  increaseLife(player, handsanitizer) {
+    handsanitizer.die();
     this.lifeLabel.add(1);
 
     //tambahkan kode di bawah ini
     this.sound.play("handsanitizerSound");
 
-    if (this.lifeLabel.getLife() >= 3) {
+    if (this.lifeLabel.getLife() >= 1) {
       player.clearTint().setAlpha(2);
     }
   }

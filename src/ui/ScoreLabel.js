@@ -1,26 +1,20 @@
 import Phaser from "phaser";
 
-export default class Laser extends Phaser.Physics.Arcade.Sprite {
-  constructor(scene, x, y, texture) {
-    super(scene, x, y, texture);
-    this.setScale(2);
-    this.speed = 200;
-  }
+const formatScore = (gameScore) => `Score: ${gameScore}`;
 
-  fire(x, y) {
-    this.setPosition(x, y - 50);
-    this.setActive(true);
-    this.setVisible(true);
+export default class ScoreLabel extends Phaser.GameObjects.Text {
+  constructor(scene, x, y, skor, style) {
+    super(scene, x, y, formatScore(skor), style);
+    this.score = skor;
   }
-
-  erase() {
-    this.destroy();
+  setScore(skor) {
+    this.score = skor;
+    this.setText(formatScore(this.score));
   }
-
-  update(time) {
-    this.setVelocityY(this.speed * -1);
-    if (this.y < -10) {
-      this.erase();
-    }
+  getScore() {
+    return this.score;
+  }
+  add(points) {
+    this.setScore(this.score + points);
   }
 }
