@@ -31,9 +31,9 @@ export default class CoronaBusterScene extends Phaser.Scene {
   preload() {
     this.load.image("background", "images/bg-1.png");
     this.load.image("cloud", "images/saturn.png");
-    this.load.image("left-btn", "images/left-btn.png");
-    this.load.image("right-btn", "images/right-btn.png");
-    this.load.image("shoot-btn", "images/shoot-btn.png");
+    this.load.image("left-btn", "images/rawr (1).png");
+    this.load.image("right-btn", "images/wrw (3).png");
+    this.load.image("shoot-btn", "images/wow (2) (1) (3).png");
     this.load.spritesheet("player", "images/ship.png", {
       frameWidth: 66,
       frameHeight: 66,
